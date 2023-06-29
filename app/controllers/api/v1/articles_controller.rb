@@ -17,7 +17,18 @@ class Api::V1::ArticlesController < ApplicationController
 
     def create
         @post = Post.create(article_params)
-        render json: @post, status: :created
+
+        if params[:image].present?
+            response = Cloudinary::Uploader.upload(params[:image])
+            @post.image_url = response['secure_url']
+            puts @post.image_url
+        end
+
+        if @post.save
+            render json: { success: true, post: @post, image_url: @post.image_url }, status: :ok
+        else
+            render json: { success: false, errors: @post.errors }, status: :unprocessable_entity
+        end
     end
 
     def update

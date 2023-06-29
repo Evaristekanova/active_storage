@@ -11,6 +11,7 @@ gem "sprockets-rails"
 gem "dotenv-rails"
 gem "cloudinary"
 gem "activestorage"
+gem "ffi"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
