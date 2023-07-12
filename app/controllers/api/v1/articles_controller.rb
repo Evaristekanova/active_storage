@@ -1,9 +1,11 @@
 class Api::V1::ArticlesController < ApplicationController
+    include Paginable
     skip_before_action :verify_authenticity_token
     
     def index
-        @posts = Post.all
-        render json: @posts, status: :ok
+        collection = Post.all
+        paginated_collection = paginate(collection)
+        render json: paginated_collection, status: :ok
     end
 
     def show
